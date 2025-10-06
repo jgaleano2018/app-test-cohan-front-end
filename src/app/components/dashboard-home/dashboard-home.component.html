@@ -1,0 +1,9 @@
+@for (card of cards; track $index) {
+    <div class="card-grid">
+        <app-card
+            [title]="card.title"
+            [icon]="card.icon"
+            [route]="card.route"
+        ></app-card>
+    </div>
+}

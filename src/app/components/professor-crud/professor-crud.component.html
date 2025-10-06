@@ -1,0 +1,53 @@
+ <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+            <div class="card-header">{{ idProfessor ? 'Edit' : 'Add' }} Professor</div>
+            <div class="card-body">
+
+                <form [formGroup]="form" (ngSubmit)="save()">                    
+
+                    <div class="mb-6">
+                        <label for="idPerson" class="form-label">Select Person</label>
+                        <select id="idPerson" class="form-select" formControlName="idPerson">
+                            <option value="">-- Choose one --</option>
+                            @for (person of persons; track person.idPerson) {
+                                <option [value]="person.idPerson">
+                                {{ person.name }}
+                                </option>
+                            }
+                        </select>                    
+                    </div>
+                     @if (form.get('idPerson')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Person is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input
+                            type="number"                            
+                            class="form-control"
+                            id="salary"
+                            formControlName="salary"
+                            inputmode="decimal" 
+                            pattern="[0-9]+([.,][0-9]+)?"
+                            placeholder="0.00"
+                        />
+                    </div>
+                    @if (form.get('salary')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Salary is required.</div>
+                        </div>
+                    }
+
+                    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Login</button>
+                    <button mat-raised-button color="warn" routerLink="/professors">Cancel</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+

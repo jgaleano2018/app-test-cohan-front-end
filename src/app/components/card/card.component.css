@@ -1,0 +1,12 @@
+.card {
+    text-align: center;
+    padding: 10px;
+    transition: transform 0.3s;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+mat-icon {
+    font-size: 40px;
+    color: #3f51b5;
+}

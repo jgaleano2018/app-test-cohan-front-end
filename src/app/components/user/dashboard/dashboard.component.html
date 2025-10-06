@@ -1,0 +1,31 @@
+<div>
+  @if (authService.authenticated) {
+    <mat-toolbar color="primary">
+
+      <span class="header">User Console</span>
+
+      <span class="example-spacer"></span>
+
+      <button
+        mat-icon-button
+        class="example-icon favorite-icon"
+        (click)="authService.logout()">
+        <mat-icon class="mat-icon-large">logout</mat-icon>
+      </button>
+
+    </mat-toolbar>
+  }
+
+</div>
+
+@for (card of cards; track $index) {
+    <div class="card-grid">
+        <app-card
+            [title]="card.title"
+            [icon]="card.icon"
+            [route]="card.route"
+        ></app-card>
+    </div>
+}
+
+<router-outlet></router-outlet>

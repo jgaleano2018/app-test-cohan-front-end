@@ -1,0 +1,138 @@
+ <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+            <div class="card-header">Persons</div>
+            <div class="card-body">
+
+                <form [formGroup]="form" (ngSubmit)="save()">
+                    <div class="mb-6">
+                        <label for="name" class="form-label">Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            formControlName="name"
+                        />
+                    </div>
+                    @if (form.get('name')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Name is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="phone"
+                            formControlName="phone"
+                        />
+                    </div>
+                    @if (form.get('phone')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Phone is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="email"
+                            formControlName="email"
+                        />
+                    </div>
+                    @if (form.get('email')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Email is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="street" class="form-label">Street</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="street"
+                            formControlName="street"
+                        />
+                    </div>
+                    @if (form.get('street')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Street is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="city" class="form-label">City</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="city"
+                            formControlName="city"
+                        />
+                    </div>
+                    @if (form.get('city')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>City is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Country</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="country"
+                            formControlName="country"
+                        />
+                    </div>
+                    @if (form.get('country')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Country is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="state" class="form-label">State</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="state"
+                            formControlName="state"
+                        />
+                    </div>
+                    @if (form.get('state')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>State is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="postalCode" class="form-label">Postal Code</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="postalCode"
+                            formControlName="postalCode"
+                        />
+                    </div>
+                    @if (form.get('postalCode')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Postal Code is required.</div>
+                        </div>
+                    }
+
+                    <button type="submit" class="btn btn-primary">
+                        Save
+                    </button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,68 @@
+<div class="container">
+    <h2 class="text-center mt-5 mb-3">Students List</h2>
+
+    <div class="card">
+        <div class="card-header">
+            <a routerLink="/students/new" class="btn btn-primary mb-3">Add Person</a>
+        </div>
+        <div class="card-body">
+
+        <div class="table-responsive">
+
+            <mat-table class="students-table mat-elevation-z8" [dataSource]="dataSource"
+               matSort matSortActive="idStudent" matSortDirection="asc" matSortDisableClear>             
+
+                <ng-container matColumnDef="idStudent">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
+                    <mat-cell *matCellDef="let lstStudents">{{lstStudents.idStudent}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="idPerson">
+                    <mat-header-cell *matHeaderCellDef>Id Person</mat-header-cell>
+                    <mat-cell class="idPerson-cell"
+                            *matCellDef="let lstStudents">{{lstStudents.idPerson}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="student">
+                    <mat-header-cell *matHeaderCellDef>Student</mat-header-cell>
+                    <mat-cell class="student-cell"
+                            *matCellDef="let lstStudents">{{lstStudents.student}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="average_mark">
+                    <mat-header-cell *matHeaderCellDef>Average Mark</mat-header-cell>
+                    <mat-cell class="average_mark-cell"
+                            *matCellDef="let lstStudents">{{lstStudents.average_mark}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef>Edit</th>
+                    <td mat-cell *matCellDef="let lstStudents">
+                    <a [routerLink]="['/students/edit', lstStudents.id_student]">{{lstStudents.name}}</a>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef>Delete</th>
+                    <td mat-cell *matCellDef="let lstStudents">
+                    <button mat-icon-button color="warn" (click)="deleteStudents(lstStudents.idStudent)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    </td>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                
+            </mat-table>
+
+        </div>
+
+        @if (totalItems>10) {
+            <mat-paginator [length]="totalItems" [pageSize]="pageSize"
+                           [pageSizeOptions]="[10, 20, 30, 40, 50]"></mat-paginator>
+        }
+
+        </div>
+    </div>
+</div>

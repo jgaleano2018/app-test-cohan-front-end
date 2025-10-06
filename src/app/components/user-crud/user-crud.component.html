@@ -1,0 +1,64 @@
+ <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+            <div class="card-header">{{ idUser ? 'Edit' : 'Add' }} User</div>
+            <div class="card-body">
+
+                <form [formGroup]="form" (ngSubmit)="save()">
+                    <div class="mb-6">
+                        <label for="userName" class="form-label">User Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="userName"
+                            formControlName="userName"
+                        />
+                    </div>
+                    @if (form.get('userName')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>User Name is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="password"
+                            formControlName="password"
+                        />
+                    </div>
+                    @if (form.get('password')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Password is required.</div>
+                        </div>
+                    }
+
+                    <div class="mb-3">
+                        <label for="idRol" class="form-label">Select Rol</label>
+                        <select id="idRol" class="form-select" formControlName="idRol">
+                            <option value="">-- Choose one --</option>
+                            @for (rol of roles; track rol.idRol) {
+                                <option [value]="rol.idRol">
+                                {{ rol.name }}
+                                </option>
+                            }
+                        </select>                    
+                    </div>
+                     @if (form.get('idRol')?.errors?.['required']) {
+                        <div class="invalid-feedback">
+                            <div>Rol is required.</div>
+                        </div>
+                    }
+
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button mat-raised-button color="warn" routerLink="/users">Cancel</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
