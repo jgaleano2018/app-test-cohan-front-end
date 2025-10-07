@@ -34,8 +34,6 @@ export class StudentCRUDComponent implements OnInit {
       student: ['', [Validators.required, Validators.minLength(10)]],
     });
 
-    //this.idStudent = this.route.snapshot.params['idStudent'] ? +this.route.snapshot.params['idStudent'] : null;
-
     this.route.paramMap.subscribe(params => {
       this.idStudent = params.get('idStudent') as string;
     });
@@ -44,9 +42,16 @@ export class StudentCRUDComponent implements OnInit {
   }
 
   getPersons(){
-
     this.personService.getList().subscribe((res) => {
-      this.persons = res.data || [];
+      for (let idx=0; idx<res.length; idx++) {
+        const personModel: Person = {
+          idPerson: res[idx].id_Person,
+          name: res[idx].name,
+          phone: res[idx].phone,
+          email: res[idx].email
+        }
+        this.persons.push(personModel);
+      }
       this.cdr.detectChanges();
     });
 

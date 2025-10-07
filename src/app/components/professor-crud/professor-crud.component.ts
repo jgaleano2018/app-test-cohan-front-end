@@ -35,8 +35,6 @@ export class ProfessorCRUDComponent implements OnInit {
       salary: ['', [Validators.required, Validators.minLength(3)]],
     });
 
-    //this.idProfessor = this.route.snapshot.params['idProfessor'] ? +this.route.snapshot.params['idProfessor'] : null;
-
     this.route.paramMap.subscribe(params => {
       this.idProfessor = params.get('idProfessor') as string;
     });
@@ -45,16 +43,23 @@ export class ProfessorCRUDComponent implements OnInit {
   }
 
   getPersons(){
-
     this.personService.getList().subscribe((res) => {
-      this.persons = res || [];
+      for (let idx=0; idx<res.length; idx++) {
+        const personModel: Person = {
+          idPerson: res[idx].id_Person,
+          name: res[idx].name,
+          phone: res[idx].phone,
+          email: res[idx].email
+        }
+        this.persons.push(personModel);
+      }
       this.cdr.detectChanges();
     });
-
   }
 
   save(): void {
     if (this.form.invalid) return;
+
 
     if (this.idProfessor) {
 
