@@ -17,7 +17,7 @@ private fullUrl = environment.apiUrl + "/api/persons";
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.fullUrl}${id}`);
+    return this.http.get<any>(`${this.fullUrl}/${id}`);
   }
   
   create(person: Person): Observable<any> {

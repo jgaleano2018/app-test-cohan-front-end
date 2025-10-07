@@ -3,7 +3,7 @@
 
     <div class="card">
         <div class="card-header">
-            <a routerLink="/professors/new" class="btn btn-primary mb-3">Add Person</a>
+            <a routerLink="/professors/new" class="btn btn-primary mb-3">Add Proffesor</a>
         </div>
         <div class="card-body">
 
@@ -15,6 +15,12 @@
                 <ng-container matColumnDef="idProfessor">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
                     <mat-cell *matCellDef="let lstProfessors">{{lstProfessors.idProfessor}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="idPerson">
+                    <mat-header-cell *matHeaderCellDef>Id Person</mat-header-cell>
+                    <mat-cell class="name-cell"
+                            *matCellDef="let lstProfessors">{{lstProfessors.idPerson}}</mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="name">
@@ -41,10 +47,12 @@
                             *matCellDef="let lstProfessors">{{lstProfessors.salary}}</mat-cell>
                 </ng-container>
 
-                <ng-container matColumnDef="edit">
+                 <ng-container matColumnDef="edit">
                     <th mat-header-cell *matHeaderCellDef>Edit</th>
                     <td mat-cell *matCellDef="let lstProfessors">
-                    <a [routerLink]="['/professors/edit', lstProfessors.idProfessor]">{{lstProfessors.name}}</a>
+                    <button mat-icon-button color="warn" (click)="editProfessor(lstProfessors.idProfessor)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
                     </td>
                 </ng-container>
 
@@ -56,6 +64,7 @@
                     </button>
                     </td>
                 </ng-container>
+
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

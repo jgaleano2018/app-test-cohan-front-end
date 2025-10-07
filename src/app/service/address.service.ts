@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AddressService {
   
-private fullUrl = environment.apiUrl + "/api/address";
+private fullUrl = environment.apiUrl + "/api/addresses";
   constructor(private http: HttpClient) {}
 
   getList(): Observable<any> {
@@ -17,11 +17,18 @@ private fullUrl = environment.apiUrl + "/api/address";
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.fullUrl}${id}`);
+    return this.http.get<any>(`${this.fullUrl}/${id}`);
   }
   
-  create(address: Address): Observable<any> {
-    return this.http.post<any>(`${this.fullUrl}`, address);
+  create(idPerson: string, address: Address): Observable<any> {
+    const addressModel = {
+      street: address.street,
+      city: address.city,
+      country: address.country,
+      state: address.state,
+      postalCode: address.postalCode,
+    }
+    return this.http.post<any>(`${this.fullUrl}/${idPerson}`, addressModel);
   }
 
   update(idAddress: string, address: Address): Observable<Address> {

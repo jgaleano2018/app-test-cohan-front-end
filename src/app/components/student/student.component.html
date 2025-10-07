@@ -3,7 +3,7 @@
 
     <div class="card">
         <div class="card-header">
-            <a routerLink="/students/new" class="btn btn-primary mb-3">Add Person</a>
+            <a routerLink="/students/new" class="btn btn-primary mb-3">Add Students</a>
         </div>
         <div class="card-body">
 
@@ -35,10 +35,13 @@
                             *matCellDef="let lstStudents">{{lstStudents.average_mark}}</mat-cell>
                 </ng-container>
 
+              
                 <ng-container matColumnDef="edit">
                     <th mat-header-cell *matHeaderCellDef>Edit</th>
                     <td mat-cell *matCellDef="let lstStudents">
-                    <a [routerLink]="['/students/edit', lstStudents.id_student]">{{lstStudents.name}}</a>
+                    <button mat-icon-button color="warn" (click)="editStudent(lstStudents.idStudent)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
                     </td>
                 </ng-container>
 

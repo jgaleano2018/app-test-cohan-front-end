@@ -7,6 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddressService } from '../../service/address.service';
 import { Person } from '../../models/person.interface';
 import { Address } from '../../models/address.interface';
+import { PersonResponse } from '../../models/personResponse.interface';
+import { PersonAddress } from '../../models/personAddress.interface';
+import { PersonAddressService } from '../../service/personAddress.service';
 
 @Component({
   selector: 'app-person-crud.component',
@@ -18,11 +21,15 @@ export class PersonCRUDComponent implements OnInit {
   form!: FormGroup;
   formAddress!: FormGroup;
   idPerson!: any | null;
+  personSingle: Person | undefined;
+  personAddress: PersonAddress[] = [];
+  addressSingle: Address | undefined;
 
   constructor(
     private fb: FormBuilder,
     private personService: PersonService,
     private addressService: AddressService,
+    private personAddressService: PersonAddressService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -36,10 +43,60 @@ export class PersonCRUDComponent implements OnInit {
       city: ['', [Validators.required, Validators.minLength(3)]],
       country: ['', [Validators.required, Validators.minLength(3)]],
       state: ['', [Validators.required, Validators.minLength(3)]],
-      postal_code: ['', [Validators.required, Validators.minLength(1)]],
+      postalCode: ['', [Validators.required, Validators.minLength(1)]],
     });
 
-    this.idPerson = this.route.snapshot.params['idPerson'] ? +this.route.snapshot.params['idPerson'] : null;
+    this.idPerson = this.route.snapshot.params['id_Person'] ? +this.route.snapshot.params['id_Person'] : null;
+
+    this.route.paramMap.subscribe(params => {
+      this.idPerson = params.get('id_Person') as string;
+
+      console.log("IDPERSON_RESULT:: " + this.idPerson)
+    
+      console.log("IDPERSONN:: " + this.idPerson)
+
+      if (this.idPerson) {
+
+        this.personService.getById(this.idPerson).subscribe((res) => { 
+          
+          this.personSingle = res;
+
+          console.log(this.personSingle)
+
+          this.personAddressService.getList().subscribe((res2) => { 
+
+            this.personAddress = res2;
+
+            console.log(this.personAddress)
+
+            const personAddressSingle = this.personAddress.filter(pa => pa.idPerson === this.idPerson);
+
+            this.addressService.getById(personAddressSingle[0].idAddress).subscribe((res3) => {
+
+              this.addressSingle = res3;
+
+              console.log(this.addressSingle)
+
+              this.form.setValue({
+                name: this.personSingle?.name,
+                phone: this.personSingle?.phone,
+                email: this.personSingle?.email,
+                street: this.addressSingle?.street,
+                city: this.addressSingle?.city,
+                country: this.addressSingle?.country,
+                state: this.addressSingle?.state,
+                postalCode: this.addressSingle?.postalCode
+              });
+
+            });
+
+          });
+
+        });
+
+      }
+
+    });
   }
 
   save(): void {
@@ -54,12 +111,14 @@ export class PersonCRUDComponent implements OnInit {
 
     const addressModel:Address = {
       idAddress:"0",
-      street: this.form.get('name')!.value,
-      city: this.form.get('phone')!.value,
-      country: this.form.get('email')!.value,
+      street: this.form.get('street')!.value,
+      city: this.form.get('city')!.value,
+      country: this.form.get('country')!.value,
       state: this.form.get('state')!.value,
-      postal_code: this.form.get('postalCode')!.value,
+      postalCode: this.form.get('postalCode')!.value,
     }
+
+    console.log("ID PERSONNNN: " + this.idPerson)
 
     if (this.idPerson) {
 
@@ -86,9 +145,12 @@ export class PersonCRUDComponent implements OnInit {
       });
     } else {
 
+      console.log("ID PERSONNNN_0000002: " + this.idPerson)
+
       this.personService.create(this.form.value).subscribe({
-        next: (data) => {
-          this.addressService.update(data.id_person,addressModel).subscribe({
+        next: (data: PersonResponse) => {
+          console.log(data)
+          this.addressService.create(data.id_Person,addressModel).subscribe({
             next: (data) => {
               Swal.fire({
                 icon: 'success',

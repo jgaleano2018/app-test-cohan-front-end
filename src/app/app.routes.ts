@@ -70,7 +70,7 @@ export const routes: Routes = [
       import('./components/person-crud/person-crud.component').then(m => m.PersonCRUDComponent)
   },
   {
-    path: 'persons/edit',
+    path: 'persons/edit/:id_Person',
     loadComponent: () =>
       import('./components/person-crud/person-crud.component').then(m => m.PersonCRUDComponent)
   },
@@ -85,7 +85,7 @@ export const routes: Routes = [
       import('./components/professor-crud/professor-crud.component').then(m => m.ProfessorCRUDComponent)
   },
   {
-    path: 'professors/edit',
+    path: 'professors/edit/:idProfessor',
     loadComponent: () =>
       import('./components/professor-crud/professor-crud.component').then(m => m.ProfessorCRUDComponent)
   },
@@ -100,7 +100,7 @@ export const routes: Routes = [
       import('./components/student-crud/student-crud.component').then(m => m.StudentCRUDComponent)
   },
   {
-    path: 'students/edit',
+    path: 'students/edit/:idStudent',
     loadComponent: () =>
       import('./components/student-crud/student-crud.component').then(m => m.StudentCRUDComponent)
   }

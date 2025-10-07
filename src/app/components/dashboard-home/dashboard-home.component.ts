@@ -13,6 +13,6 @@ export class DashboardHomeComponent {
   cards = [
     { title: 'Persons', icon: 'person', route: '/persons' },
     { title: 'Professors', icon: 'settings', route: '/professors' },
-    { title: 'Reports', icon: 'bar_chart', route: '/reports' },
+    { title: 'Students', icon: 'bar_chart', route: '/students' },
   ];
 }

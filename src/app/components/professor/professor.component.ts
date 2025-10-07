@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule  } from '@angular/forms';
 import Swal from 'sweetalert2'
 import {MatTableDataSource, MatTableModule} from '@angular/material/table'
@@ -23,13 +23,14 @@ import { ProfessorService } from '../../service/professor.service';
 export class ProfessorComponent implements OnInit {
   professors: Professor[] = [];
   professorSingle: Professor | undefined;
-  displayedColumns: string[] = ["idProfesor", "idPerson", "name", "phone", "email", "salary"];
+  displayedColumns: string[] = ["idProfessor", "idPerson", "name", "phone", "email", "salary"];
   dataSource:any;
   totalItems: number = 0;
   pageSize: number = 10;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private professorService: ProfessorService,
+              private router: Router,
              private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -39,8 +40,8 @@ export class ProfessorComponent implements OnInit {
   getProfessors(){
 
     this.professorService.getList().subscribe((res) => {
-      this.totalItems = res.data.length;
-      this.professors = res.data || [];
+      this.totalItems = res.length;
+      this.professors = res || [];
 
       this.dataSource = new MatTableDataSource<Professor>(this.professors);
       this.dataSource.paginator = this.paginator;
@@ -49,6 +50,11 @@ export class ProfessorComponent implements OnInit {
     });
 
   }
+
+  editProfessor(idProfessor: string): void {
+    this.router.navigate(['/professors/edit', idProfessor]);
+  }
+
 
   deleteProfessor(idProfessor: string): void {
     this.professorService.delete(idProfessor).subscribe({

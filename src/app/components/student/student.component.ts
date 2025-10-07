@@ -1,7 +1,7 @@
 
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule  } from '@angular/forms';
 import Swal from 'sweetalert2'
 import {MatTableDataSource, MatTableModule} from '@angular/material/table'
@@ -30,6 +30,7 @@ export class StudentComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private studentService: StudentService,
+              private router: Router,
              private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -39,8 +40,8 @@ export class StudentComponent implements OnInit {
   getStudents(){
 
     this.studentService.getList().subscribe((res) => {
-      this.totalItems = res.data.length;
-      this.students = res.data || [];
+      this.totalItems = res.length;
+      this.students = res || [];
 
       this.dataSource = new MatTableDataSource<Student>(this.students);
       this.dataSource.paginator = this.paginator;
@@ -48,6 +49,10 @@ export class StudentComponent implements OnInit {
       this.cdr.detectChanges();
     });
 
+  }
+
+  editStudent(idStudent: string): void {
+    this.router.navigate(['/students/edit', idStudent]);
   }
 
   deleteStudents(idStudent: string): void {

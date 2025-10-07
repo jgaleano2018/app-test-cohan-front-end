@@ -34,7 +34,11 @@ export class StudentCRUDComponent implements OnInit {
       student: ['', [Validators.required, Validators.minLength(10)]],
     });
 
-    this.idStudent = this.route.snapshot.params['idStudent'] ? +this.route.snapshot.params['idStudent'] : null;
+    //this.idStudent = this.route.snapshot.params['idStudent'] ? +this.route.snapshot.params['idStudent'] : null;
+
+    this.route.paramMap.subscribe(params => {
+      this.idStudent = params.get('idStudent') as string;
+    });
 
     this.getPersons();
   }
